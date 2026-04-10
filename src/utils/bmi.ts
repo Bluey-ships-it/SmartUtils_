@@ -13,10 +13,13 @@ export function calculateBMI(
 	height: number,
 	system: UnitSystem,
 ): number {
+	if (weight <= 0 || height <= 0) return 0;
+
 	if (system === "metric") {
 		const heightInMeters = height / 100;
 		return weight / (heightInMeters * heightInMeters);
 	}
+
 	return (703 * weight) / (height * height);
 }
 
