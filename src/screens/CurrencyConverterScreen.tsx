@@ -15,6 +15,7 @@ import CurrencySelector from "../components/currency/CurrencySelector";
 import CurrencyResult from "../components/currency/CurrencyResult";
 import { CURRENCIES } from "../constants/currencies";
 import type { Currency } from "../types/converter";
+import ScreenHeader from "../components/ScreenHeader";
 
 export default function CurrencyConverterScreen() {
 	const { theme } = useTheme();
@@ -33,27 +34,7 @@ export default function CurrencyConverterScreen() {
 		<ScreenWrapper>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				{/* Header */}
-				<View style={styles.header}>
-					<TouchableOpacity
-						onPress={() => navigation.goBack()}
-						style={[
-							styles.backBtn,
-							{
-								backgroundColor: theme.colors.surface,
-								borderColor: theme.colors.border,
-								borderRadius: theme.radius.md,
-							},
-						]}
-					>
-						<Ionicons
-							name="arrow-back-outline"
-							size={20}
-							color={theme.colors.text}
-						/>
-					</TouchableOpacity>
-					<AppText variant="subheading">Currency</AppText>
-					<View style={styles.backBtn} />
-				</View>
+				<ScreenHeader title="Currency Converter"/>
 
 				{/* Amount Input */}
 				<AppText variant="label" style={styles.sectionLabel}>

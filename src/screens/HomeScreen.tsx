@@ -1,7 +1,8 @@
 import React from "react";
-import { FlatList, View, StyleSheet } from "react-native";
+import { FlatList, View, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../context/ThemeContext";
 import { TOOLS } from "../constants/tools";
 import ScreenWrapper from "../components/ScreenWrapper";
@@ -14,7 +15,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function HomeScreen() {
 	const navigation = useNavigation<NavigationProp>();
-	const { theme } = useTheme();
+	const { theme, isDark, toggleTheme } = useTheme();
 
 	function handleToolPress(tool: Tool) {
 		navigation.navigate(tool.route);
@@ -23,8 +24,27 @@ export default function HomeScreen() {
 	return (
 		<ScreenWrapper>
 			<View style={styles.header}>
-				<AppText variant="heading">Smart Toolkit</AppText>
-				<AppText variant="caption">Pick a tool to get started</AppText>
+				<View style={styles.headerText}>
+					<AppText variant="heading">Smart Toolkit</AppText>
+					<AppText variant="caption">Pick a tool to get started</AppText>
+				</View>
+				<TouchableOpacity
+					onPress={toggleTheme}
+					style={[
+						styles.themeBtn,
+						{
+							backgroundColor: theme.colors.surface,
+							borderColor: theme.colors.border,
+							borderRadius: theme.radius.md,
+						},
+					]}
+				>
+					<Ionicons
+						name={isDark ? "sunny-outline" : "moon-outline"}
+						size={20}
+						color={theme.colors.text}
+					/>
+				</TouchableOpacity>
 			</View>
 			<FlatList
 				data={TOOLS}
@@ -43,8 +63,20 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
 	header: {
+		flexDirection: "row",
+		alignItems: "flex-start",
+		justifyContent: "space-between",
 		paddingTop: 24,
 		paddingBottom: 20,
+	},
+	headerText: {
 		gap: 4,
+	},
+	themeBtn: {
+		width: 40,
+		height: 40,
+		alignItems: "center",
+		justifyContent: "center",
+		borderWidth: 1,
 	},
 });

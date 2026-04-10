@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../context/ThemeContext";
 import ScreenWrapper from "../components/ScreenWrapper";
@@ -10,6 +9,7 @@ import UnitInput from "../components/unit/UnitInput";
 import UnitResult from "../components/unit/UnitResult";
 import { UNIT_CATEGORIES } from "../constants/units";
 import type { Unit, UnitCategory } from "../types/converter";
+import ScreenHeader from "../components/ScreenHeader";
 
 function convert(value: number, from: Unit, to: Unit): string {
 	const result = (value * from.factor) / to.factor;
@@ -18,8 +18,6 @@ function convert(value: number, from: Unit, to: Unit): string {
 
 export default function UnitConverterScreen() {
 	const { theme } = useTheme();
-	const navigation = useNavigation();
-
 	const [category, setCategory] = useState<UnitCategory>(UNIT_CATEGORIES[0]);
 	const [fromUnit, setFromUnit] = useState<Unit>(UNIT_CATEGORIES[0].units[0]);
 	const [toUnit, setToUnit] = useState<Unit>(UNIT_CATEGORIES[0].units[2]);
@@ -47,28 +45,7 @@ export default function UnitConverterScreen() {
 		<ScreenWrapper>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				{/* Header */}
-				<View style={styles.header}>
-					<TouchableOpacity
-						onPress={() => navigation.goBack()}
-						style={[
-							styles.backBtn,
-							{
-								backgroundColor: theme.colors.surface,
-								borderColor: theme.colors.border,
-								borderRadius: theme.radius.md,
-							},
-						]}
-					>
-						<Ionicons
-							name="arrow-back-outline"
-							size={20}
-							color={theme.colors.text}
-						/>
-					</TouchableOpacity>
-					<AppText variant="subheading">Unit Converter</AppText>
-					<View style={styles.backBtn} />
-				</View>
-
+				<ScreenHeader title="Unit Converter"/>
 				{/* Category Selector */}
 				<CategorySelector selected={category} onChange={handleCategoryChange} />
 

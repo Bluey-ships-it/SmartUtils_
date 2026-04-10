@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { ScrollView } from "react-native";
 import { useTheme } from "../context/ThemeContext";
 import ScreenWrapper from "../components/ScreenWrapper";
-import BMIHeader from "../components/bmi/BmiHeader";
 import UnitToggle from "../components/bmi/UnitToggle";
 import BMIInputs from "../components/bmi/BMIInputs";
 import BMIResult from "../components/bmi/BMIResult";
 import { calculateBMI, getBMICategory, getBMIPosition } from "../utils/bmi";
 import type { UnitSystem } from "../utils/bmi";
+import ScreenHeader from "../components/ScreenHeader";
 
 export default function BMICalculatorScreen() {
 	const { theme } = useTheme();
@@ -47,7 +47,7 @@ export default function BMICalculatorScreen() {
 	return (
 		<ScreenWrapper>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<BMIHeader />
+				<ScreenHeader title="BMI Calculator"/>
 				<UnitToggle value={system} onChange={handleSystemChange} />
 				<BMIInputs
 					weight={weight}

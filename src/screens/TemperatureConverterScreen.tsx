@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import {
 	View,
 	TextInput,
-	TouchableOpacity,
 	ScrollView,
 	StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../context/ThemeContext";
 import ScreenWrapper from "../components/ScreenWrapper";
 import AppText from "../components/AppText";
@@ -16,6 +14,7 @@ import TemperatureResult from "../components/temperature/TemperatureResult";
 import type { TempUnit } from "../components/temperature/TemperatureUnitSelector";
 import type { ConversionResult } from "../components/temperature/TemperatureResult";
 import { UNIT_SYMBOLS } from "../components/temperature/TemperatureUnitSelector";
+import ScreenHeader from "../components/ScreenHeader";
 
 function convert(value: number, from: TempUnit): ConversionResult[] {
 	let celsius: number;
@@ -61,27 +60,7 @@ export default function TemperatureConverterScreen() {
 		<ScreenWrapper>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				{/* Header */}
-				<View style={styles.header}>
-					<TouchableOpacity
-						onPress={() => navigation.goBack()}
-						style={[
-							styles.backBtn,
-							{
-								backgroundColor: theme.colors.surface,
-								borderColor: theme.colors.border,
-								borderRadius: theme.radius.md,
-							},
-						]}
-					>
-						<Ionicons
-							name="arrow-back-outline"
-							size={20}
-							color={theme.colors.text}
-						/>
-					</TouchableOpacity>
-					<AppText variant="subheading">Temperature</AppText>
-					<View style={styles.backBtn} />
-				</View>
+				<ScreenHeader title="Temperature Converter" />
 
 				{/* Unit Selector */}
 				<TemperatureUnitSelector
