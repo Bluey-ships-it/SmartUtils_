@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ScrollView } from "react-native";
 import { useTheme } from "../context/ThemeContext";
 import ScreenWrapper from "../components/ScreenWrapper";
-import BMIHeader from "../components/bmi/BMIHeader";
+import BMIHeader from "../components/bmi/BmiHeader";
 import UnitToggle from "../components/bmi/UnitToggle";
 import BMIInputs from "../components/bmi/BMIInputs";
 import BMIResult from "../components/bmi/BMIResult";

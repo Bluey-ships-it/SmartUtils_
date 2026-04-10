@@ -11,13 +11,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../context/ThemeContext";
 import ScreenWrapper from "../components/ScreenWrapper";
 import AppText from "../components/AppText";
-
-type TempUnit = "Celsius" | "Fahrenheit" | "Kelvin";
-
-type ConversionResult = {
-	unit: TempUnit;
-	value: string;
-};
+import TemperatureUnitSelector from "../components/temperature/TemperatureUnitSelector";
+import TemperatureResult from "../components/temperature/TemperatureResult";
+import type { TempUnit } from "../components/temperature/TemperatureUnitSelector";
+import type { ConversionResult } from "../components/temperature/TemperatureResult";
+import { UNIT_SYMBOLS } from "../components/temperature/TemperatureUnitSelector";
 
 function convert(value: number, from: TempUnit): ConversionResult[] {
 	let celsius: number;
@@ -47,14 +45,6 @@ function convert(value: number, from: TempUnit): ConversionResult[] {
 			value: results[unit].toFixed(2),
 		}));
 }
-
-const UNITS: TempUnit[] = ["Celsius", "Fahrenheit", "Kelvin"];
-
-const UNIT_SYMBOLS: Record<TempUnit, string> = {
-	Celsius: "°C",
-	Fahrenheit: "°F",
-	Kelvin: "K",
-};
 
 export default function TemperatureConverterScreen() {
 	const { theme } = useTheme();
@@ -94,49 +84,10 @@ export default function TemperatureConverterScreen() {
 				</View>
 
 				{/* Unit Selector */}
-				<AppText variant="label" style={styles.sectionLabel}>
-					Convert from
-				</AppText>
-				<View style={styles.unitRow}>
-					{UNITS.map((unit) => {
-						const active = unit === selectedUnit;
-						return (
-							<TouchableOpacity
-								key={unit}
-								onPress={() => setSelectedUnit(unit)}
-								style={[
-									styles.unitBtn,
-									{
-										backgroundColor: active
-											? theme.colors.primary
-											: theme.colors.surface,
-										borderColor: active
-											? theme.colors.primary
-											: theme.colors.border,
-										borderRadius: theme.radius.md,
-									},
-								]}
-							>
-								<AppText
-									variant="label"
-									color={
-										active ? theme.colors.textOnPrimary : theme.colors.text
-									}
-								>
-									{UNIT_SYMBOLS[unit]}
-								</AppText>
-								<AppText
-									variant="caption"
-									color={
-										active ? theme.colors.textOnPrimary : theme.colors.textMuted
-									}
-								>
-									{unit}
-								</AppText>
-							</TouchableOpacity>
-						);
-					})}
-				</View>
+				<TemperatureUnitSelector
+					selected={selectedUnit}
+					onChange={setSelectedUnit}
+				/>
 
 				{/* Input */}
 				<AppText variant="label" style={styles.sectionLabel}>
@@ -172,37 +123,7 @@ export default function TemperatureConverterScreen() {
 				</View>
 
 				{/* Results */}
-				{results.length > 0 && (
-					<View style={styles.resultsSection}>
-						<AppText variant="label" style={styles.sectionLabel}>
-							Results
-						</AppText>
-						{results.map((result) => (
-							<View
-								key={result.unit}
-								style={[
-									styles.resultCard,
-									{
-										backgroundColor: theme.colors.surface,
-										borderColor: theme.colors.border,
-										borderRadius: theme.radius.md,
-										padding: theme.spacing.md,
-										marginBottom: theme.spacing.sm,
-									},
-								]}
-							>
-								<AppText variant="caption">{result.unit}</AppText>
-								<AppText variant="heading" color={theme.colors.primary}>
-									{result.value}
-									<AppText variant="body" color={theme.colors.textSecondary}>
-										{" "}
-										{UNIT_SYMBOLS[result.unit]}
-									</AppText>
-								</AppText>
-							</View>
-						))}
-					</View>
-				)}
+				<TemperatureResult results={results} />
 			</ScrollView>
 		</ScreenWrapper>
 	);
@@ -226,18 +147,6 @@ const styles = StyleSheet.create({
 	sectionLabel: {
 		marginBottom: 8,
 	},
-	unitRow: {
-		flexDirection: "row",
-		gap: 10,
-		marginBottom: 24,
-	},
-	unitBtn: {
-		flex: 1,
-		alignItems: "center",
-		paddingVertical: 12,
-		borderWidth: 1,
-		gap: 2,
-	},
 	inputWrapper: {
 		flexDirection: "row",
 		alignItems: "center",
@@ -249,12 +158,5 @@ const styles = StyleSheet.create({
 	input: {
 		flex: 1,
 		paddingVertical: 14,
-	},
-	resultsSection: {
-		marginBottom: 32,
-	},
-	resultCard: {
-		borderWidth: 1,
-		gap: 4,
 	},
 });
