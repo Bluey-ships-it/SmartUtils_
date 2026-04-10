@@ -28,7 +28,7 @@ export default function HomeScreen() {
 					<AppText variant="heading">Smart Toolkit</AppText>
 					<AppText variant="caption">Pick a tool to get started</AppText>
 				</View>
-				<TouchableOpacity
+				{/* 				<TouchableOpacity
 					onPress={toggleTheme}
 					style={[
 						styles.themeBtn,
@@ -44,7 +44,7 @@ export default function HomeScreen() {
 						size={20}
 						color={theme.colors.text}
 					/>
-				</TouchableOpacity>
+				</TouchableOpacity>*/}
 			</View>
 			<FlatList
 				data={TOOLS}
