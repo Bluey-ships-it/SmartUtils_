@@ -1,5 +1,4 @@
 import React, { createContext, useCallback, useContext, useState } from "react";
-import { useColorScheme } from "react-native";
 import {
 	COLORS,
 	FONT_SIZES,
@@ -30,11 +29,7 @@ type ThemeContextValue = {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-	const systemScheme = useColorScheme();
-	const [mode, setMode] = useState<ThemeMode>(
-		systemScheme === "dark" ? "dark" : "light",
-	);
-
+	const [mode, setMode] = useState<ThemeMode>("light");
 	const isDark = mode === "dark";
 
 	const theme: Theme = {
