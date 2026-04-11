@@ -1,16 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View,  StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { useTheme } from "../context/ThemeContext";
-import ScreenWrapper from "../components/ScreenWrapper";
-import StopwatchDisplay from "../components/stopwatch/StopWatchDisplay";
-import StopwatchControls from "../components/stopwatch/StopWatchControls";
-import ScreenHeader from "../components/ScreenHeader";
+import { View, StyleSheet } from "react-native";
+import StopwatchDisplay from "../stopwatch/StopWatchDisplay";
+import StopwatchControls from "../stopwatch/StopWatchControls";
 
-export default function StopwatchScreen() {
-	const { theme } = useTheme();
-	const navigation = useNavigation();
-
+export default function StopwatchTab() {
 	const [elapsed, setElapsed] = useState(0);
 	const [isRunning, setIsRunning] = useState(false);
 	const [hasStarted, setHasStarted] = useState(false);
@@ -50,41 +43,21 @@ export default function StopwatchScreen() {
 	}
 
 	return (
-		<ScreenWrapper>
-			{/* Header */}
-			<ScreenHeader title="Stopwatch"/>
-
-			{/* Display */}
-			<View style={styles.displayContainer}>
-				<StopwatchDisplay elapsed={elapsed} />
-				<StopwatchControls
-					isRunning={isRunning}
-					hasStarted={hasStarted}
-					onStart={handleStart}
-					onPause={handlePause}
-					onReset={handleReset}
-				/>
-			</View>
-		</ScreenWrapper>
+		<View style={styles.container}>
+			<StopwatchDisplay elapsed={elapsed} />
+			<StopwatchControls
+				isRunning={isRunning}
+				hasStarted={hasStarted}
+				onStart={handleStart}
+				onPause={handlePause}
+				onReset={handleReset}
+			/>
+		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	header: {
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between",
-		paddingTop: 16,
-		paddingBottom: 24,
-	},
-	backBtn: {
-		width: 40,
-		height: 40,
-		alignItems: "center",
-		justifyContent: "center",
-		borderWidth: 1,
-	},
-	displayContainer: {
+	container: {
 		flex: 1,
 		justifyContent: "center",
 	},
