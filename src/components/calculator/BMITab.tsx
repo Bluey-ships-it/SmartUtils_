@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "../context/ThemeContext";
-import ScreenWrapper from "../components/ScreenWrapper";
-import ScreenHeader from "../components/ScreenHeader";
-import UnitToggle from "../components/bmi/UnitToggle";
-import BMIInputs from "../components/bmi/BMIInputs";
-import BMIResult from "../components/bmi/BMIResult";
-import AppText from "../components/AppText";
-import { calculateBMI, getBMICategory, getBMIPosition } from "../utils/bmi";
-import type { UnitSystem } from "../utils/bmi";
+import { useTheme } from "../../context/ThemeContext";
+import AppText from "../AppText";
+import UnitToggle from "../bmi/UnitToggle";
+import BMIInputs from "../bmi/BMIInputs";
+import BMIResult from "../bmi/BMIResult";
+import { calculateBMI, getBMICategory, getBMIPosition } from "../../utils/bmi";
+import type { UnitSystem } from "../../utils/bmi";
 
-export default function BMICalculatorScreen() {
+export default function BMITab() {
 	const { theme } = useTheme();
 	const [system, setSystem] = useState<UnitSystem>("metric");
 	const [weight, setWeight] = useState("");
@@ -74,47 +72,42 @@ export default function BMICalculatorScreen() {
 	const feedback = getFeedback();
 
 	return (
-		<ScreenWrapper>
-			<ScrollView showsVerticalScrollIndicator={false}>
-				<ScreenHeader title="BMI Calculator" />
-				<UnitToggle value={system} onChange={handleSystemChange} />
-				<BMIInputs
-					weight={weight}
-					height={height}
-					system={system}
-					onWeightChange={handleWeightChange}
-					onHeightChange={handleHeightChange}
-				/>
-
-				{feedback !== null && (
-					<View
-						style={[
-							styles.feedbackBox,
-							{
-								backgroundColor: theme.colors.errorLight,
-								borderColor: theme.colors.error,
-								borderRadius: theme.radius.md,
-								padding: theme.spacing.md,
-								marginBottom: theme.spacing.md,
-							},
-						]}
-					>
-						<Ionicons
-							name="alert-circle-outline"
-							size={16}
-							color={theme.colors.error}
-						/>
-						<AppText variant="caption" color={theme.colors.error}>
-							{feedback}
-						</AppText>
-					</View>
-				)}
-
-				{bmi && category && position !== null && (
-					<BMIResult bmi={bmi} category={category} position={position} />
-				)}
-			</ScrollView>
-		</ScreenWrapper>
+		<View>
+			<UnitToggle value={system} onChange={handleSystemChange} />
+			<BMIInputs
+				weight={weight}
+				height={height}
+				system={system}
+				onWeightChange={handleWeightChange}
+				onHeightChange={handleHeightChange}
+			/>
+			{feedback !== null && (
+				<View
+					style={[
+						styles.feedbackBox,
+						{
+							backgroundColor: theme.colors.errorLight,
+							borderColor: theme.colors.error,
+							borderRadius: theme.radius.md,
+							padding: theme.spacing.md,
+							marginBottom: theme.spacing.md,
+						},
+					]}
+				>
+					<Ionicons
+						name="alert-circle-outline"
+						size={16}
+						color={theme.colors.error}
+					/>
+					<AppText variant="caption" color={theme.colors.error}>
+						{feedback}
+					</AppText>
+				</View>
+			)}
+			{bmi && category && position !== null && (
+				<BMIResult bmi={bmi} category={category} position={position} />
+			)}
+		</View>
 	);
 }
 
