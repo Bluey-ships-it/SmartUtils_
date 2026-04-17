@@ -183,6 +183,13 @@ export default function TaskCard({
 					</AppText>
 				</TouchableOpacity>
 			)}
+			<AppText
+				variant="caption"
+				color={theme.colors.textMuted}
+				style={styles.longPressHint}
+			>
+				Long press title or description to view full content
+			</AppText>
 
 			{/* Bottom Row */}
 			<View style={styles.bottomRow}>
@@ -276,6 +283,9 @@ const styles = StyleSheet.create({
 	description: {
 		paddingLeft: 32,
 		lineHeight: 20,
+	},
+	longPressHint: {
+		paddingLeft: 32,
 	},
 	bottomRow: {
 		flexDirection: "row",

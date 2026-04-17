@@ -4,6 +4,7 @@ import {
 	TextInput,
 	TouchableOpacity,
 	Modal,
+	Pressable,
 	KeyboardAvoidingView,
 	Platform,
 	ScrollView,
@@ -72,19 +73,21 @@ export default function EditTaskModal({
 			transparent
 			onRequestClose={handleClose}
 		>
-			<KeyboardAvoidingView
-				behavior={Platform.OS === "ios" ? "padding" : "height"}
-				style={styles.overlay}
-			>
-				<View
-					style={[
-						styles.sheet,
-						{
-							backgroundColor: theme.colors.background,
-						},
-					]}
+			<Pressable style={styles.overlay} onPress={handleClose}>
+				<KeyboardAvoidingView
+					behavior={Platform.OS === "ios" ? "padding" : "height"}
+					style={styles.overlay}
 				>
-					<ScrollView showsVerticalScrollIndicator={false}>
+					<Pressable
+						onPress={(event) => event.stopPropagation()}
+						style={[
+							styles.sheet,
+							{
+								backgroundColor: theme.colors.background,
+							},
+						]}
+					>
+						<ScrollView showsVerticalScrollIndicator={false}>
 						{/* Handle */}
 						<View style={styles.handleWrapper}>
 							<View
@@ -229,9 +232,10 @@ export default function EditTaskModal({
 								Cancel
 							</AppText>
 						</TouchableOpacity>
-					</ScrollView>
-				</View>
-			</KeyboardAvoidingView>
+						</ScrollView>
+					</Pressable>
+				</KeyboardAvoidingView>
+			</Pressable>
 		</Modal>
 	);
 }
