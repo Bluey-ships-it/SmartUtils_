@@ -24,7 +24,10 @@ export default function TextScreen() {
 		<ScreenWrapper>
 			<ScreenHeader title="Text Tools" />
 			<UtilityTabs tabs={TABS} activeKey={activeTab} onChange={setActiveTab} />
-			<ScrollView showsVerticalScrollIndicator={false}>
+			<ScrollView
+				showsVerticalScrollIndicator={false}
+				keyboardShouldPersistTaps="handled"
+			>
 				<View style={{ paddingBottom: theme.spacing.xl }}>
 					{activeTab === "word" && <WordCountTab />}
 					{activeTab === "char" && <CharCountTab />}

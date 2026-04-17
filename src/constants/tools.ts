@@ -29,4 +29,11 @@ export const TOOLS: Tool[] = [
 		icon: "time-outline",
 		route: "Time",
 	},
+	{
+		id: "task",
+		name: "Task Tools",
+		description: "Stopwatch and countdown timer",
+		icon: "checkbox-outline",
+		route: "Tasks",
+	},
 ];

@@ -24,7 +24,10 @@ export default function ConversionScreen() {
 		<ScreenWrapper>
 			<ScreenHeader title="Conversion" />
 			<UtilityTabs tabs={TABS} activeKey={activeTab} onChange={setActiveTab} />
-			<ScrollView showsVerticalScrollIndicator={false}>
+			<ScrollView
+				showsVerticalScrollIndicator={false}
+				keyboardShouldPersistTaps="handled"
+			>
 				<View style={{ paddingBottom: theme.spacing.xl }}>
 					{activeTab === "unit" && <UnitConverterTab />}
 					{activeTab === "temperature" && <TemperatureConverterTab />}
